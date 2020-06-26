@@ -1,0 +1,13 @@
+body {
+  background: url(/background.jpg);
+  background-size: cover;
+}
+.frame {
+  margin: auto;
+  height: 100%;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
