@@ -1,23 +1,34 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { createLogger } from 'redux-logger';
-import { xyz } from './reducers';
+import thunkMiddleware from 'redux-thunk';
+
 import 'semantic-ui-css/semantic.min.css';
 import * as serviceWorker from './serviceWorker';
-import App from './containers/App';
+import App from './containers/App/App';
 import './index.css';
 
+import AppReducer from './containers/App/AppReducer';
+import LoginReducer from './containers/Login/LoginReducer';
+
+const rootReducer = combineReducers({
+  app: AppReducer,
+  login: LoginReducer
+});
 const logger = createLogger();
-const store = createStore(xyz, applyMiddleware(logger));
-const root = document.getElementById('root');
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
+const rootElement = document.getElementById('root');
 
 render(
   <Provider store={store}>
-    <App />
+    <div className='App'>
+      <App />
+    </div>
   </Provider>,
-  root
+  rootElement
 );
 
 serviceWorker.unregister();

@@ -2,7 +2,7 @@ body {
   background: url(/background.jpg);
   background-size: cover;
 }
-.frame {
+.App {
   margin: auto;
   height: 100%;
   max-width: 550px;

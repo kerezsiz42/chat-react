@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Segment, Button, Header, Input, Grid } from 'semantic-ui-react';
 
-const Register = ({ changePage }) => (
+const Register = ({ changeView }) => (
   <Segment>
     <Form>
       <Header as='h1' dividing textAlign='center'>Wirebird's Chat Registration</Header>
@@ -22,7 +22,7 @@ const Register = ({ changePage }) => (
           <Button color='teal' fluid>Register</Button>
         </Grid.Column>
         <Grid.Column>
-          <Button onClick={() => changePage('guest-login')} fluid>Back to Login</Button>
+          <Button onClick={() => changeView('login')} fluid>Back to Login</Button>
         </Grid.Column>
       </Grid>
     </Form>
