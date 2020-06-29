@@ -1,41 +1,23 @@
 import {
-  CHANGE_USERNAME_FIELD,
-  CHANGE_PASSWORD_FIELD,
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAILED
 } from './LoginTypes';
 
-export const setUsernameField = (text) => {
-  return {
-    type: CHANGE_USERNAME_FIELD,
-    payload: text
-  }
-}
+import fetchServer from '../../fetchServer';
 
-export const setPasswordField = (text) => {
-  return {
-    type: CHANGE_PASSWORD_FIELD,
-    payload: text
-  }
-}
 
-export const login = (username, password) => (dispatch) => {
-  dispatch({ type: LOGIN_PENDING });
-  fetch(`${process.env.REACT_APP_API}/login`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ username, password })
-  })
-    .then(response => response.json())
-    .then(data => {
-      if(data.token !== undefined) {
-        dispatch({ type: LOGIN_SUCCESS, payload: data.token });
-      } else {
-        throw Error('No token received.');
-      }
-    })
-    .catch(error => {
-      dispatch({ type: LOGIN_FAILED, payload: error });
-    });
+export const login = (loginInfo, password) => async (dispatch) => {
+  try {
+    dispatch({ type: LOGIN_PENDING });
+    const data = await fetchServer('/login', {username: loginInfo, email: loginInfo, password});
+    if(data.token !== undefined) {
+      localStorage.setItem('token', data.token);
+      dispatch({ type: LOGIN_SUCCESS });
+    } else {
+      throw Error('No token received.');
+    }
+  } catch(error) {
+    dispatch({ type: LOGIN_FAILED, payload: error });
+  }
 }

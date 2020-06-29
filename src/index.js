@@ -13,10 +13,12 @@ import './index.css';
 
 import AppReducer from './containers/App/AppReducer';
 import LoginReducer from './containers/Login/LoginReducer';
+import RegisterReducer from './containers/Register/RegisterReducer';
 
 const rootReducer = combineReducers({
   app: AppReducer,
-  login: LoginReducer
+  login: LoginReducer,
+  register: RegisterReducer
 });
 const logger = createLogger();
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));

@@ -19,16 +19,22 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class App extends Component {
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    /* Call myChats(), if success then view = home. */
+  }
+
   render() {
-    const { view, changeView } = this.props;
+    const { view } = this.props;
     if(view === 'home') {
-      return;
+      return <h1>Hello</h1>;
     } else {
       if(view === 'login') {
-        return <Login changeView={changeView} />;
+        return <Login />;
       }
       if(view === 'register') {
-        return <Register changeView={changeView} />;
+        return <Register />;
       }
     }
   }
