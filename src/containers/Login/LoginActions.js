@@ -1,4 +1,6 @@
 import {
+  CHANGE_LOGIN_PASSWORD,
+  CHANGE_LOGIN_USERNAME,
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAILED
@@ -6,6 +8,19 @@ import {
 
 import fetchServer from '../../fetchServer';
 
+export const setLoginUsername = (text) => {
+  return {
+    type: CHANGE_LOGIN_USERNAME,
+    payload: text
+  }
+}
+
+export const setLoginPassword = (text) => {
+  return {
+    type: CHANGE_LOGIN_PASSWORD,
+    payload: text
+  }
+}
 
 export const login = (loginInfo, password) => async (dispatch) => {
   try {
@@ -15,9 +30,9 @@ export const login = (loginInfo, password) => async (dispatch) => {
       localStorage.setItem('token', data.token);
       dispatch({ type: LOGIN_SUCCESS });
     } else {
-      throw Error('No token received.');
+      dispatch({ type: LOGIN_FAILED, payload: data.error });
     }
-  } catch(error) {
-    dispatch({ type: LOGIN_FAILED, payload: error });
+  } catch {
+    dispatch({ type: LOGIN_FAILED, payload: ['No response from server.'] });
   }
 }

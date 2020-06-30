@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { Form, Segment, Button, Header, Input, Grid, Loader, Dimmer } from 'semantic-ui-react';
+import ErrorMessage from '../../components/ErrorMessage';
 
 import { register, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField} from './RegisterActions';
 import { changeView } from '../App/AppActions';
@@ -12,7 +13,7 @@ const mapStateToProps = (state) => {
     emailField: state.register.emailField,
     secondPasswordField: state.register.secondPasswordField,
     isPending: state.register.isPending,
-    error: state.register.error
+    errors: state.register.errors
   }
 }
 
@@ -28,14 +29,16 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class Register extends Component {
-  registerProcess = async () => {
-    const { usernameField, passwordField, register, changeView } = this.props;
-    await register(usernameField, passwordField);
-    changeView('login');
+  submitRegister = async () => {
+    const { usernameField, emailField, passwordField, register, changeView } = this.props;
+    await register(usernameField, emailField, passwordField);
+    if(!this.props.errors.length) {
+      changeView('login');
+    }
   }
 
   render() {
-    const { changeView, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField, isPending } = this.props;
+    const { changeView, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField, isPending, errors } = this.props;
     return (
       <Segment>
         <Dimmer inverted active={isPending}>
@@ -43,6 +46,7 @@ class Register extends Component {
         </Dimmer>
         <Form>
           <Header as='h1' dividing textAlign='center'>Wirebird's Chat Registration</Header>
+          <ErrorMessage errors={errors} />
           <Form.Field>
             <Input onChange={setUsernameField} icon='user' iconPosition='left' type='text' placeholder='Username' autoComplete='off' focus></Input>
           </Form.Field>
@@ -57,7 +61,7 @@ class Register extends Component {
           </Form.Field>
           <Grid columns={2}>
             <Grid.Column>
-              <Button onClick={this.registerProcess} color='teal' fluid>Register</Button>
+              <Button onClick={this.submitRegister} color='teal' fluid>Register</Button>
             </Grid.Column>
             <Grid.Column>
               <Button onClick={() => changeView('login')} fluid>Back to Login</Button>

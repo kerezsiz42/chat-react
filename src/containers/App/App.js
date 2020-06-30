@@ -4,38 +4,41 @@ import './App.css';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 
-import { changeView } from './AppActions';
+import { changeView, changeLoginStatus } from './AppActions';
+import Home from '../Home/Home';
 
 const mapStateToProps = (state) => {
   return {
-    view: state.app.view
+    view: state.app.view,
+    isLoggedIn: state.app.isLoggedIn
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeView(view))
+    changeView: (view) => dispatch(changeView(view)),
+    changeLoginStatus: (isLoggedIn) => dispatch(changeLoginStatus(isLoggedIn))
   }
 }
 
 class App extends Component {
   componentDidMount() {
+    const { changeView } = this.props;
     const token = localStorage.getItem('token');
-    console.log(token);
-    /* Call myChats(), if success then view = home. */
+    if(token) {
+      changeView('home');
+    }
   }
 
   render() {
     const { view } = this.props;
-    if(view === 'home') {
-      return <h1>Hello</h1>;
-    } else {
-      if(view === 'login') {
+    switch(view) {
+      case 'login':
         return <Login />;
-      }
-      if(view === 'register') {
+      case 'register':
         return <Register />;
-      }
+      default:
+        return <Home />;
     }
   }
 }

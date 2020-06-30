@@ -1,1 +1,2 @@
 export const CHANGE_VIEW = 'CHANGE_VIEW';
+export const CHANGE_LOGIN_STATUS = 'CHANGE_LOGIN_STATUS';

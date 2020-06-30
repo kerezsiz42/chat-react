@@ -1,6 +1,6 @@
 import {
-  CHANGE_USERNAME_FIELD,
-  CHANGE_PASSWORD_FIELD,
+  CHANGE_REGISTER_USERNAME,
+  CHANGE_REGISTER_PASSWORD,
   CHANGE_EMAIL_FIELD,
   CHANGE_SECOND_PASSWORD_FIELD,
   REGISTER_PENDING,
@@ -12,14 +12,14 @@ import fetchServer from '../../fetchServer';
 
 export const setUsernameField = (text) => {
   return {
-    type: CHANGE_USERNAME_FIELD,
+    type: CHANGE_REGISTER_USERNAME,
     payload: text
   }
 }
 
 export const setPasswordField = (text) => {
   return {
-    type: CHANGE_PASSWORD_FIELD,
+    type: CHANGE_REGISTER_PASSWORD,
     payload: text
   }
 }
@@ -38,17 +38,16 @@ export const setSecondPasswordField = (text) => {
   }
 }
 
-export const register = (username, email, password) => (dispatch) => {
-  dispatch({ type: REGISTER_PENDING });
-  return fetchServer('/register', {username, email, password})
-    .then(data => {
-      if(data.success !== undefined) {
-        dispatch({ type: REGISTER_SUCCESS });
-      } else {
-        Promise.reject(data.error);
-      }
-    })
-    .catch(error => {
-      dispatch({ type: REGISTER_FAILED, payload: error });
-    });
+export const register = (username, email, password) => async (dispatch) => {
+  try {
+    dispatch({ type: REGISTER_PENDING });
+    const data = await fetchServer('/register', {username, email, password})
+    if(data.success !== undefined) {
+      dispatch({ type: REGISTER_SUCCESS });
+    } else {
+      dispatch({ type: REGISTER_FAILED, payload: data.error });
+    }
+  } catch {
+    dispatch({ type: REGISTER_FAILED, payload: ['No response from server.'] });
+  }
 }

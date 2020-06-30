@@ -1,4 +1,6 @@
 import {
+  CHANGE_LOGIN_PASSWORD,
+  CHANGE_LOGIN_USERNAME,
   LOGIN_PENDING,
   LOGIN_SUCCESS,
   LOGIN_FAILED
@@ -6,17 +8,21 @@ import {
 
 const initialState = {
   isPending: false,
-  error: ''
+  errors: []
 }
 
 const LoginReducer = (state = initialState, action = {}) => {
   switch(action.type) {
+    case CHANGE_LOGIN_PASSWORD:
+      return { ...state, passwordField: action.payload };
+    case CHANGE_LOGIN_USERNAME:
+      return { ...state, usernameField: action.payload };
     case LOGIN_PENDING:
       return { ...state, isPending: true };
     case LOGIN_SUCCESS:
-      return { ...state, isPending: false };
+      return { ...state, errors: [], isPending: false };
     case LOGIN_FAILED:
-      return { ...state, error: action.payload, isPending: false };
+      return { ...state, errors: action.payload, isPending: false };
     default:
       return state;
   }

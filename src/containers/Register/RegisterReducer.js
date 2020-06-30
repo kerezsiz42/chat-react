@@ -1,6 +1,6 @@
 import {
-  CHANGE_PASSWORD_FIELD,
-  CHANGE_USERNAME_FIELD,
+  CHANGE_REGISTER_USERNAME,
+  CHANGE_REGISTER_PASSWORD,
   CHANGE_EMAIL_FIELD,
   CHANGE_SECOND_PASSWORD_FIELD,
   REGISTER_PENDING,
@@ -14,15 +14,15 @@ const initialState = {
   emailField: '',
   secondPasswordField: '',
   isPending: false,
-  error: ''
+  errors: []
 }
 
 const RegisterReducer = (state = initialState, action = {}) => {
   switch(action.type) {
-    case CHANGE_USERNAME_FIELD:
-      return { ...state, usernameField: action.payload };
-    case CHANGE_PASSWORD_FIELD:
+    case CHANGE_REGISTER_PASSWORD:
       return { ...state, passwordField: action.payload };
+    case CHANGE_REGISTER_USERNAME:
+      return { ...state, usernameField: action.payload };
     case CHANGE_EMAIL_FIELD:
       return { ...state, emailField: action.payload };
     case CHANGE_SECOND_PASSWORD_FIELD:
@@ -30,9 +30,9 @@ const RegisterReducer = (state = initialState, action = {}) => {
     case REGISTER_PENDING:
       return { ...state, isPending: true };
     case REGISTER_SUCCESS:
-      return { ...state, isPending: false };
+      return { ...state, errors: [], isPending: false };
     case REGISTER_FAILED:
-      return { ...state, error: action.payload, isPending: false };
+      return { ...state, errors: action.payload, isPending: false };
     default:
       return state;
   }
