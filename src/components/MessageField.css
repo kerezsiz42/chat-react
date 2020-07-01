@@ -1,0 +1,8 @@
+footer {
+  border-top: 1px solid lightgray;
+  background-color: white;
+  padding: 0.7em;
+}
+textarea::-webkit-scrollbar, content::-webkit-scrollbar {
+  display: none;
+}

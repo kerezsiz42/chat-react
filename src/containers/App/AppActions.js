@@ -1,18 +1,10 @@
 import {
-  CHANGE_VIEW,
-  CHANGE_LOGIN_STATUS
+  CHANGE_APP_VIEW
 } from './AppTypes';
 
-export const changeView = (view) => {
+export const changeAppView = (view) => {
   return {
-    type: CHANGE_VIEW,
+    type: CHANGE_APP_VIEW,
     payload: view
-  }
-}
-
-export const changeLoginStatus = (isLoggedIn) => {
-  return {
-    type: CHANGE_LOGIN_STATUS,
-    payload: isLoggedIn
   }
 }

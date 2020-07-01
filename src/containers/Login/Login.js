@@ -4,7 +4,7 @@ import { Form, Segment, Button, Header, Input, Grid, Loader, Dimmer } from 'sema
 import ErrorMessage from '../../components/ErrorMessage';
 
 import { login, setLoginUsername, setLoginPassword } from './LoginActions';
-import { changeView, changeLoginStatus } from '../App/AppActions';
+import { changeAppView } from '../App/AppActions';
 
 const mapStateToProps = (state) => {
   return {
@@ -20,23 +20,21 @@ const mapDispatchToProps = (dispatch) => {
     setLoginUsername: (event) => dispatch(setLoginUsername(event.target.value)),
     setLoginPassword: (event) => dispatch(setLoginPassword(event.target.value)),
     login: (username, password) => dispatch(login(username, password)),
-    changeView: (view) => dispatch(changeView(view)),
-    changeLoginStatus: (isLoggedIn) => dispatch(changeLoginStatus(isLoggedIn)),
+    changeAppView: (view) => dispatch(changeAppView(view))
   }
 }
 
 class Login extends Component {
   submitLogin = async () => {
-    const { usernameField, passwordField, login, changeView, changeLoginStatus } = this.props;
+    const { usernameField, passwordField, login, changeAppView} = this.props;
     await login(usernameField, passwordField);
     if(!this.props.errors.length) {
-      changeLoginStatus(true);
-      changeView('home');
+      changeAppView('home');
     }
   }
 
   render() {
-    const { changeView, setLoginPassword, setLoginUsername, isPending, errors } = this.props;
+    const { changeAppView, setLoginPassword, setLoginUsername, isPending, errors } = this.props;
     return (
       <Segment>
         <Dimmer inverted active={isPending}>
@@ -69,7 +67,7 @@ class Login extends Component {
               <Button onClick={this.submitLogin} color='teal' fluid>Login</Button>
             </Grid.Column>
             <Grid.Column>
-              <Button onClick={() => changeView('register')} fluid>Register</Button>
+              <Button onClick={() => changeAppView('register')} fluid>Register</Button>
             </Grid.Column>
           </Grid>
         </Form>

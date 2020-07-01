@@ -1,10 +1,18 @@
 import {
   MYCHATS_PENDING,
   MYCHATS_SUCCESS,
-  MYCHATS_FAILED
+  MYCHATS_FAILED,
+  CHANGE_HOME_VIEW
 } from './HomeTypes';
 
 import fetchServer from '../../fetchServer';
+
+export const changeHomeView = (view) => {
+  return {
+    type: CHANGE_HOME_VIEW,
+    payload: view
+  }
+}
 
 export const myChats = (token) => async (dispatch) => {
   try {

@@ -1,2 +1,1 @@
-export const CHANGE_VIEW = 'CHANGE_VIEW';
-export const CHANGE_LOGIN_STATUS = 'CHANGE_LOGIN_STATUS';
+export const CHANGE_APP_VIEW = 'CHANGE_APP_VIEW';

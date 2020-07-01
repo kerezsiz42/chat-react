@@ -4,7 +4,7 @@ import { Form, Segment, Button, Header, Input, Grid, Loader, Dimmer } from 'sema
 import ErrorMessage from '../../components/ErrorMessage';
 
 import { register, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField} from './RegisterActions';
-import { changeView } from '../App/AppActions';
+import { changeAppView } from '../App/AppActions';
 
 const mapStateToProps = (state) => {
   return {
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeView: (view) => dispatch(changeView(view)),
+    changeAppView: (view) => dispatch(changeAppView(view)),
     setUsernameField: (event) => dispatch(setUsernameField(event.target.value)),
     setPasswordField: (event) => dispatch(setPasswordField(event.target.value)),
     setEmailField: (event) => dispatch(setEmailField(event.target.value)),
@@ -30,15 +30,15 @@ const mapDispatchToProps = (dispatch) => {
 
 class Register extends Component {
   submitRegister = async () => {
-    const { usernameField, emailField, passwordField, register, changeView } = this.props;
+    const { usernameField, emailField, passwordField, register, changeAppView } = this.props;
     await register(usernameField, emailField, passwordField);
     if(!this.props.errors.length) {
-      changeView('login');
+      changeAppView('login');
     }
   }
 
   render() {
-    const { changeView, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField, isPending, errors } = this.props;
+    const { changeAppView, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField, isPending, errors } = this.props;
     return (
       <Segment>
         <Dimmer inverted active={isPending}>
@@ -64,7 +64,7 @@ class Register extends Component {
               <Button onClick={this.submitRegister} color='teal' fluid>Register</Button>
             </Grid.Column>
             <Grid.Column>
-              <Button onClick={() => changeView('login')} fluid>Back to Login</Button>
+              <Button onClick={() => changeAppView('login')} fluid>Back to Login</Button>
             </Grid.Column>
           </Grid>
         </Form>
