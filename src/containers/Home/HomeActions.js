@@ -2,7 +2,9 @@ import {
   MYCHATS_PENDING,
   MYCHATS_SUCCESS,
   MYCHATS_FAILED,
-  CHANGE_HOME_VIEW
+  CHANGE_HOME_VIEW,
+  CHANGE_CURRENT_CHAT,
+  TOGGLE_MENU_STATUS
 } from './HomeTypes';
 
 import fetchServer from '../../fetchServer';
@@ -11,6 +13,19 @@ export const changeHomeView = (view) => {
   return {
     type: CHANGE_HOME_VIEW,
     payload: view
+  }
+}
+
+export const changeCurrentChat = (chat) => {
+  return {
+    type: CHANGE_CURRENT_CHAT,
+    payload: chat
+  }
+}
+
+export const toggleMenuStatus = () => {
+  return {
+    type: TOGGLE_MENU_STATUS
   }
 }
 

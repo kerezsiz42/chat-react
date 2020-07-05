@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Form, Segment, Button, Header, Input, Grid, Loader, Dimmer } from 'semantic-ui-react';
+import { Form, Segment, Button, Header, Input, Grid } from 'semantic-ui-react';
 import ErrorMessage from '../../components/ErrorMessage';
 
 import { register, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField} from './RegisterActions';
@@ -39,11 +39,8 @@ class Register extends Component {
 
   render() {
     const { changeAppView, setEmailField, setSecondPasswordField, setPasswordField, setUsernameField, isPending, errors } = this.props;
-    return (
-      <Segment>
-        <Dimmer inverted active={isPending}>
-          <Loader>Waiting for server response...</Loader>
-        </Dimmer>
+    return <div className='app'>
+      <Segment loading={isPending}>
         <Form>
           <Header as='h1' dividing textAlign='center'>Wirebird's Chat Registration</Header>
           <ErrorMessage errors={errors} />
@@ -61,15 +58,15 @@ class Register extends Component {
           </Form.Field>
           <Grid columns={2}>
             <Grid.Column>
-              <Button onClick={this.submitRegister} color='teal' fluid>Register</Button>
+              <Button type='submit' onClick={this.submitRegister} color='teal' fluid>Register</Button>
             </Grid.Column>
             <Grid.Column>
-              <Button onClick={() => changeAppView('login')} fluid>Back to Login</Button>
+              <Button type='button' onClick={() => changeAppView('login')} fluid>Back to Login</Button>
             </Grid.Column>
           </Grid>
         </Form>
       </Segment>
-    );
+    </div>
   }
 }
 

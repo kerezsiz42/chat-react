@@ -1,5 +1,6 @@
 import {
-  CHANGE_APP_VIEW
+  CHANGE_APP_VIEW,
+  LOGOUT
 } from './AppTypes';
 
 const initialState = {
@@ -8,6 +9,8 @@ const initialState = {
 
 const AppReducer = (state = initialState, action = {}) => {
   switch(action.type) {
+    case LOGOUT:
+      return {...state, view: 'login'}
     case CHANGE_APP_VIEW:
       return {...state, view: action.payload};
     default:

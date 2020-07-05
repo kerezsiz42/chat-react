@@ -28,9 +28,7 @@ const rootElement = document.getElementById('root');
 
 render(
   <Provider store={store}>
-    <div className='App'>
       <App />
-    </div>
   </Provider>,
   rootElement
 );
