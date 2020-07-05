@@ -1,25 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Sidebar, Menu, Icon } from 'semantic-ui-react'
+import { Sidebar, Menu, Icon, Button } from 'semantic-ui-react'
 
-import { changeHomeView } from '../containers/Home/HomeActions';
-import { logout } from '../containers/App/AppActions';
+import { changeModalView } from '../actions';
 
 const mapStateToProps = (state) => {
   return {
-    view: state.home.view,
-    isMenuOn: state.home.isMenuOn
+    view: state.view,
+    isMenuOn: state.isMenuOn,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeHomeView: (view) => dispatch(changeHomeView(view)),
-    logout: () => dispatch(logout())
+    changeModalView: (view) => dispatch(changeModalView(view)),
   }
 }
 
-const SideMenu = ({ view, isMenuOn, logout }) => {
+const SideMenu = ({ view, isMenuOn, changeModalView }) => {
   switch(view) {
     case 'conversations':
       return <Sidebar as={Menu}
@@ -34,7 +32,7 @@ const SideMenu = ({ view, isMenuOn, logout }) => {
           <Icon name='exclamation triangle' />
           Delete this account
         </Menu.Item>
-        <Menu.Item onClick={logout} as='a'>
+        <Menu.Item onClick={() => changeModalView('logout')} as='a'>
           <Icon name='sign-out' />
           Logout
         </Menu.Item>

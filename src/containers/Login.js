@@ -1,40 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Form, Segment, Button, Header, Input, Grid } from 'semantic-ui-react';
-import ErrorMessage from '../../components/ErrorMessage';
+import ErrorMessage from '../components/ErrorMessage';
 
-import { login, setLoginUsername, setLoginPassword } from './LoginActions';
-import { changeAppView } from '../App/AppActions';
+import { changeView, changeLoginData, login } from '../actions';
 
 const mapStateToProps = (state) => {
   return {
-    usernameField: state.login.usernameField,
-    passwordField: state.login.passwordField,
-    isPending: state.login.isPending,
-    errors: state.login.errors
+    loginData: state.loginData,
+    errors: state.errors,
+    isPending: state.isPending
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setLoginUsername: (event) => dispatch(setLoginUsername(event.target.value)),
-    setLoginPassword: (event) => dispatch(setLoginPassword(event.target.value)),
-    login: (username, password) => dispatch(login(username, password)),
-    changeAppView: (view) => dispatch(changeAppView(view))
+    changeView: (view) => dispatch(changeView(view)),
+    changeLoginData: (data) => dispatch(changeLoginData(data)),
+    login: (username, password) => dispatch(login(username, password))
   }
 }
 
 class Login extends Component {
+  componentDidMount() {
+    const { changeView } = this.props;
+    const token = localStorage.getItem('token');
+    if(token) {
+      changeView('conversations');
+    }
+  }
+
   submitLogin = async () => {
-    const { usernameField, passwordField, login, changeAppView} = this.props;
-    await login(usernameField, passwordField);
+    const { loginData, login, changeView} = this.props;
+    await login(loginData.username, loginData.password);
     if(!this.props.errors.length) {
-      changeAppView('home');
+      changeView('conversations');
     }
   }
 
   render() {
-    const { changeAppView, setLoginPassword, setLoginUsername, isPending, errors } = this.props;
+    const { changeView, isPending, errors, changeLoginData, loginData } = this.props;
     return <div className='app'>
       <Segment loading={isPending}>
         <Form>
@@ -42,7 +47,7 @@ class Login extends Component {
           <ErrorMessage errors={errors} />
           <Form.Field>
             <Input
-              onChange={setLoginUsername}
+              onChange={(e) => changeLoginData({...loginData, username: e.target.value})}
               icon='user'
               iconPosition='left'
               type='text'
@@ -52,7 +57,7 @@ class Login extends Component {
           </Form.Field>
           <Form.Field>
             <Input
-              onChange={setLoginPassword}
+              onChange={(e) => changeLoginData({...loginData, password: e.target.value})}
               icon='lock'
               iconPosition='left'
               type='password'
@@ -61,10 +66,19 @@ class Login extends Component {
           </Form.Field>
           <Grid columns={2}>
             <Grid.Column>
-              <Button type='submit' onClick={this.submitLogin} color='teal' fluid>Login</Button>
+              <Button
+                type='submit'
+                onClick={this.submitLogin}
+                color='teal'
+                fluid>Login
+              </Button>
             </Grid.Column>
             <Grid.Column>
-              <Button type='button' onClick={() => changeAppView('register')} fluid>Register</Button>
+              <Button
+                type='button'
+                onClick={() => changeView('register')}
+                fluid>Register
+              </Button>
             </Grid.Column>
           </Grid>
         </Form>

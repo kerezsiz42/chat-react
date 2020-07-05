@@ -2,25 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
-import {  } from '../containers/Home/HomeActions';
+import { changeModalView } from '../actions';
 
 const mapStateToProps = (state) => {
   return {
-    view: state.home.view
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    changeModalView: (view) => dispatch(changeModalView(view)),
   }
 }
 
-const CreateButton = ({ view }) => {
-  if(view === 'conversations') {
-    return <Button className='create-button' icon='add' color='teal' size='massive' circular></Button>;
-  } else {
-    return <></>;
-  }
+const CreateButton = ({ changeModalView }) => {
+  return <Button onClick={() => changeModalView('create-chat')} className='create-button' icon='add' color='teal' size='massive' circular></Button>;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateButton);

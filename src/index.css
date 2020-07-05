@@ -15,7 +15,7 @@ body {
   overflow: hidden;
 }
 
-header {
+.address-bar {
   background-color: white;
   padding: 0.5em 1em;
   display: flex;
@@ -23,21 +23,21 @@ header {
   align-items: center;
   border-bottom: 1px solid lightgray;
 }
-.main {
+.my-main {
   background-color: white;
   flex-grow: 1;
   position: relative;
   display: flex;
   flex-direction: column;
 }
-content {
+.my-content {
   display: block;
   overflow-y: auto;
   padding: 1em;
   flex-grow: 1;
 }
 
-footer {
+.message-field {
   border-top: 1px solid lightgray;
   background-color: white;
   padding: 0.7em;

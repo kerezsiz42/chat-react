@@ -2,47 +2,49 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react'
 
-import { changeHomeView, toggleMenuStatus } from '../containers/Home/HomeActions';
+import { changeView, toggleMenuStatus } from '../actions';
 
 const mapStateToProps = (state) => {
   return {
-    view: state.home.view,
-    currentChat: state.home.currentChat,
-    isMenuOn: state.home.isMenuOn
+    errors: state.errors,
+    isPending: state.isPending,
+    view: state.view,
+    currentChat: state.currentChat,
+    isMenuOn: state.isMenuOn
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeHomeView: (view) => dispatch(changeHomeView(view)),
-    toggleMenuStatus: () => dispatch(toggleMenuStatus())
+    toggleMenuStatus: () => dispatch(toggleMenuStatus()),
+    changeView: (view) => dispatch(changeView(view))
   }
 }
 
-const AddressBar = ({ view, currentChat, changeHomeView, toggleMenuStatus, isMenuOn }) => {
+const AddressBar = ({ view, currentChat, changeView, toggleMenuStatus, isMenuOn }) => {
   switch(view) {
     case 'conversations':
-      return <header>
-          <h2 style={{margin: 0}}>Conversations</h2>
-          <div>
-            <Button onClick={toggleMenuStatus} icon={isMenuOn ? 'close' : 'bars'} size='big' basic/>
-          </div>
-      </header>;
+      return <div className='address-bar'>
+        <h2 style={{margin: 0}}>Conversations</h2>
+        <div>
+          <Button onClick={toggleMenuStatus} icon={isMenuOn ? 'close' : 'bars'} size='big' basic/>
+        </div>
+      </div>;
     case 'users':
-      return <header>
-          <h2 style={{margin: 0}}>Search Users</h2>
-          <div>
-            <Button onClick={() => changeHomeView('messages')} icon='angle left' size='big' basic />
-          </div>
-      </header>;
+      return <div className='address-bar'>
+        <h2 style={{margin: 0}}>Search Users</h2>
+        <div>
+          <Button onClick={() => changeView('messages')} icon='angle left' size='big' basic />
+        </div>
+      </div>;
     case 'messages':
-      return <header>
-          <h2 style={{margin: 0}}>{currentChat ? currentChat.chatName : 'No message found'}</h2>
-          <div>
-            <Button onClick={() => changeHomeView('conversations')} icon='angle left' size='big' basic />
-            <Button onClick={toggleMenuStatus} icon={isMenuOn ? 'close' : 'bars'} size='big' basic/>
-          </div>
-      </header>;
+      return <div className='address-bar'>
+        <h2 style={{margin: 0}}>{currentChat ? currentChat.chatName : 'No message found'}</h2>
+        <div>
+          <Button onClick={() => changeView('conversations')} icon='angle left' size='big' basic/>
+          <Button onClick={toggleMenuStatus} icon={isMenuOn ? 'close' : 'bars'} size='big' basic/>
+        </div>
+      </div>;
     default:
       return <></>;
   } 
