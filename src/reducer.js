@@ -20,7 +20,10 @@ import {
   TOGGLE_MENU_STATUS,
   CREATE_CHAT_PENDING,
   CREATE_CHAT_FAILED,
-  CREATE_CHAT_SUCCESS
+  CREATE_CHAT_SUCCESS,
+  // Messages
+
+  // Users
 } from './types';
 
 const initialState = {
@@ -38,9 +41,9 @@ const initialState = {
 const reducer = (state = initialState, action = {}) => {
   switch(action.type) {
     case LOGOUT:
-      return {...state, view: 'login', isMenuOn: false};
+      return {...state, view: 'login'};
     case CHANGE_VIEW:
-      return {...state, view: action.payload, errors: []};
+      return {...state, view: action.payload, errors: [], isMenuOn: false};
     case CHANGE_MODAL_VIEW:
       return {...state, modalView: action.payload, errors: [], isMenuOn: false};
     // Login

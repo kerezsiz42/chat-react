@@ -8,6 +8,7 @@ import CreateChatModal from '../components/CreateChatModal';
 import CreateButton from '../components/CreateButton';
 
 import { changeView, changeCurrentChat, myChats } from '../actions';
+import LogoutModal from '../components/LogoutModal';
 
 const mapStateToProps = (state) => {
   return {
@@ -56,12 +57,15 @@ class Conversations extends Component {
                 return <Item as={Button} key={chat._id} onClick={() => this.loadMessages(chat)}>
                   <Item.Content>
                     <Item.Header>{chat.chatName}</Item.Header>
-                    <Item.Description>{chat.time}</Item.Description>
+                    <Item.Description>{chat.members.map(user => {
+                      return user.username + ' ';
+                    })}</Item.Description>
                   </Item.Content>
                 </Item>
               })}
             </Item.Group>
           </div>
+          <LogoutModal />
           <CreateChatModal />
           <CreateButton />
         </Sidebar.Pusher>

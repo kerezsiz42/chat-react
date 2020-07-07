@@ -20,7 +20,10 @@ import {
   TOGGLE_MENU_STATUS,
   CREATE_CHAT_PENDING,
   CREATE_CHAT_FAILED,
-  CREATE_CHAT_SUCCESS
+  CREATE_CHAT_SUCCESS,
+  // Messages
+
+  // Users
 } from './types';
 
 const fetchServer = (endpoint, params) => {

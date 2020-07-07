@@ -32,7 +32,7 @@ const AddressBar = ({ view, currentChat, changeView, toggleMenuStatus, isMenuOn 
       </div>;
     case 'users':
       return <div className='address-bar'>
-        <h2 style={{margin: 0}}>Search Users</h2>
+        <h2 style={{margin: 0}}>{currentChat ? currentChat.chatName : 'No message found'}</h2>
         <div>
           <Button onClick={() => changeView('messages')} icon='angle left' size='big' basic />
         </div>

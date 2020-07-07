@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Sidebar, Menu, Icon, Button } from 'semantic-ui-react'
 
-import { changeModalView } from '../actions';
+import { changeModalView, changeView } from '../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -14,10 +14,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeModalView: (view) => dispatch(changeModalView(view)),
+    changeView: (view) => dispatch(changeView(view))
   }
 }
 
-const SideMenu = ({ view, isMenuOn, changeModalView }) => {
+const SideMenu = ({ view, isMenuOn, changeModalView, changeView }) => {
   switch(view) {
     case 'conversations':
       return <Sidebar as={Menu}
@@ -46,7 +47,7 @@ const SideMenu = ({ view, isMenuOn, changeModalView }) => {
         direction='right'
         size='large'
       >
-        <Menu.Item as='a'>
+        <Menu.Item onClick={() => changeView('users')} as='a'>
           <Icon name='add user' />
           Add user
         </Menu.Item>
